@@ -1,0 +1,72 @@
+#include<stdio.h>
+#define N 3
+
+struct   snode 
+{
+	int   data[N];
+	int   top;
+}s;
+
+void   push(int   q)
+{
+	s.top++;
+	s.data[s.top] = q;
+}
+
+int   pop()
+{
+	int   temp;
+	temp = s.data[s.top];
+	s.top--;
+	return   temp;
+}
+
+int   Emptys()
+{
+	if (s.top == -1)
+		return   1;
+	else
+		return   0;
+}
+
+void   action(int  pos, int   path[], int   curp)
+{
+	int   m, i;
+	if (pos < N)
+	{
+		push(pos + 1);
+		action(pos + 1, path, curp);
+		pop();
+	}
+
+	if (!Emptys())
+	{
+		m = pop();
+		path[curp] = m;
+		curp++;
+		action(pos, path, curp);
+		push(m);
+		m++;
+	}
+
+	if (pos == N && Emptys())
+	{
+		for (i = 0; i < curp; i++)
+			printf("%2d", path[i]);
+		printf("\n");
+	}
+}
+
+void   main()
+{
+	int   path[N];
+	s.top = 0;
+	s.data[0] = 1;
+	printf("所有输出序列:\n");
+	action(1, path, 0);
+}
+
+
+
+
+
